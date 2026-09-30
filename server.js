@@ -14,7 +14,10 @@ const app = express();
 
 app.use(
     cors({
-      origin: "http://localhost:3000",
+        origin: [
+            "http://localhost:3000",
+            "https://iam-frontend-beta.vercel.app",
+          ],
       credentials: true,
     })
   );
