@@ -80,7 +80,7 @@ const sendLoginMfaOtp = async (req, res) => {
 
     const loginToken = req.cookies.loginToken;
     const {selectedMethod}=req.body;
-    console.log("loginToken:", loginToken);
+  
     if (!loginToken) {
       return res.status(400).json({
         message: "Login Session expired",
@@ -218,12 +218,6 @@ const sendLoginMfaOtp = async (req, res) => {
             process.env.TWILIO_PHONE_NUMBER,
           to: phoneNumber,
         });
-
-
-      console.log(
-        "Login SMS:",
-        message.body
-      );
 
 
       // ---------------------------------------------

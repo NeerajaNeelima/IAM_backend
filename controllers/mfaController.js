@@ -99,10 +99,7 @@ const setupSmsMfa = async (req, res) => {
         to: phoneNumber,
       });
 
-    console.log(
-      "SMS MFA message:",
-      message.body
-    );
+    
 
     // If Twilio template generated its own OTP,
     // extract that OTP instead.

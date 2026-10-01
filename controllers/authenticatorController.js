@@ -105,7 +105,7 @@ const setupAuthenticator = async (req, res) => {
 const verifyAuthenticator = async (req, res) => {
   try {
     const { email, otp } = req.body;
-    console.log("email, otp", email, otp)
+  
     if (!email || !otp) {
       return res.status(400).json({
         message: "Email and OTP are required",

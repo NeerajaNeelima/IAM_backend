@@ -431,7 +431,6 @@ const sendMobileOtp = async (req, res) => {
       to: phoneNumber,
     });
     
-    console.log("Twilio Message:", message);
 
     // -----------------------------
     // Extract OTP from Twilio body
@@ -455,8 +454,6 @@ const sendMobileOtp = async (req, res) => {
 
     const otp = otpMatch[0];
 
-    console.log("Extracted OTP:", otp);
-
     // -----------------------------
     // Store OTP in Redis
     // Expires after 5 minutes
@@ -468,10 +465,6 @@ const sendMobileOtp = async (req, res) => {
       {
         EX: 300,
       }
-    );
-
-    console.log(
-      `OTP stored in Redis for ${phoneNumber}`
     );
 
     return res.status(200).json({
