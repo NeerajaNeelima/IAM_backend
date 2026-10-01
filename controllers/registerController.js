@@ -208,8 +208,7 @@ const verifyEmailOtp = async (req, res) => {
   try {
     const { email, otp } = req.body;
 
-    console.log("email", email, otp);
-
+    
     if (!email || !otp) {
       return res.status(400).json({
         message: "Email and OTP are required",
@@ -389,8 +388,8 @@ const sendMobileOtp = async (req, res) => {
 
     const normalizedEmail = email.toLowerCase();
 
-    const countryCode = "+91";
-    const mobileNumber = "9346571625";
+    // const countryCode = "+91";
+    // const mobileNumber = "9346571625";
 
     // -----------------------------
     // Get registration data
@@ -423,7 +422,7 @@ const sendMobileOtp = async (req, res) => {
     // Send SMS
     // -----------------------------
 
-    const phoneNumber = `${countryCode}${mobileNumber}`;
+    const phoneNumber = `${parsedData.countryCode}${parsedData.mobileNumber}`;
 
     
     const message = await twilioClient.messages.create({
