@@ -528,7 +528,7 @@ const resetPassword = async (
 };
 
 
-export const getCurrentUser = async (req, res) => {
+const getCurrentUser = async (req, res) => {
   try {
     const token = req.cookies?.access_token;
 
@@ -582,4 +582,5 @@ module.exports = {
   forgotPassword,
   verifyResetOtp,
   resetPassword,
+  getCurrentUser
 };
