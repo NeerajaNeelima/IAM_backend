@@ -5,6 +5,7 @@ const {
   forgotPassword,
   verifyResetOtp,
   resetPassword,
+  getCurrentUser
 } = require("../controllers/loginController");
 
 const { sendLoginMfaOtp, verifyLoginMfaOtp} = require("../controllers/loginMfaController")
@@ -54,6 +55,8 @@ router.post(
 router.post("/login-otp",sendLoginMfaOtp)
 
 router.post("/verify-otp",verifyLoginMfaOtp)
+
+router.get("/auth-user",getCurrentUser)
 
 
 module.exports = router;

@@ -50,6 +50,7 @@ const login = async (req, res) => {
     const {
       email,
       password,
+     
     } = req.body;
 
 
@@ -138,7 +139,8 @@ const login = async (req, res) => {
             maxAge: 10 * 60 * 1000,
             path: "/",
           });
-      
+
+          
         return res.status(200).json({
           message: "Password verified. MFA verification required.",
           requiresMfa: true,
@@ -521,6 +523,55 @@ const resetPassword = async (
     return res.status(500).json({
       message:
         "Failed to reset password",
+    });
+  }
+};
+
+
+export const getCurrentUser = async (req, res) => {
+  try {
+    const token = req.cookies?.access_token;
+
+    if (!token) {
+      return res.status(401).json({
+        authenticated: false,
+        message: "Not authenticated",
+      });
+    }
+
+    const decoded = jwt.verify(
+      token,
+      process.env.JWT_SECRET
+    );
+
+    const user = await User.findById(decoded.userId).select(
+      "-password"
+    );
+
+    if (!user) {
+      return res.status(401).json({
+        authenticated: false,
+        message: "User not found",
+      });
+    }
+
+    return res.status(200).json({
+      authenticated: true,
+      user: {
+        id: user._id,
+        fullName: user.fullName,
+        email: user.email,
+        countryCode: user.countryCode,
+        mobileNumber: user.mobileNumber,
+      },
+    });
+
+  } catch (error) {
+    console.error("Get current user error:", error);
+
+    return res.status(401).json({
+      authenticated: false,
+      message: "Invalid or expired session",
     });
   }
 };

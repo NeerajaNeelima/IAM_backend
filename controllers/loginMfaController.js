@@ -284,9 +284,10 @@ const verifyLoginMfaOtp = async (req, res) => {
       const {
         otp,
         selectedMethod,
+        rememberMe
       } = req.body;
   
-      console.log("otp, ==>", otp, selectedMethod);
+      
   
       const loginToken = req.cookies.loginToken;
   
@@ -527,6 +528,21 @@ const verifyLoginMfaOtp = async (req, res) => {
       );
   
       await redisClient.del(attemptsKey);
+
+
+      res.cookie("access_token", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite:
+          process.env.NODE_ENV === "production"
+            ? "none"
+            : "lax",
+      
+        ...(rememberMe
+          ? { maxAge: 30 * 24 * 60 * 60 * 1000 }
+          : {}),
+      });
+  
   
       // =================================================
       // LOGIN SUCCESS
@@ -561,6 +577,9 @@ const verifyLoginMfaOtp = async (req, res) => {
       });
     }
   };
+
+
+  
 
 
 module.exports = {
