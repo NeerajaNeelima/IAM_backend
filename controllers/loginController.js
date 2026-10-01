@@ -143,6 +143,14 @@ const login = async (req, res) => {
           message: "Password verified. MFA verification required.",
           requiresMfa: true,
           mfaMethod,
+          user: {
+            fullName: user.fullName,
+            email: user.email,
+            countryCode:
+              user.countryCode,
+            mobileNumber:
+              user.mobileNumber,
+          },
         });
       }
 
